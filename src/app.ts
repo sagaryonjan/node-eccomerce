@@ -11,21 +11,21 @@ import genericErrorHandler from './core/middlewares/genericErrorHandler';
 const app: express.Application = express();
 
 app.use(cors());
-app.use(helmet());
+app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" }));
 
 if (config.environment === 'development') {
   app.use(morgan('dev'));
   app.use(cors());
 }
 
-if (config.environment === 'production') {
-  app.use(morgan('combined'));
-  app.use(
-    cors({
-      origin: config.host
-    })
-  );
-}
+// if (config.environment === 'production') {
+//   app.use(morgan('combined'));
+//   app.use(
+//     cors({
+//       origin: config.host
+//     })
+//   );
+// }
 
 app.use(express.json());
 app.use('/api', routes);
